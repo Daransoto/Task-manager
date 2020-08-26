@@ -6,6 +6,7 @@ import { addTask } from '../../actions/tasks';
 export class Form extends Component {
   state = {
     title: '',
+    status: ''
   };
 
   static propTypes = {
@@ -17,15 +18,16 @@ export class Form extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { title } = this.state;
-    const task = { title };
+    const { title, status } = this.state;
+    const task = { title, status };
     this.props.addTask(task);
     this.setState({
-      title: ""
+      title: "",
+      status: ""
     })
   };
   render() {
-    const { title } = this.state;
+    const { title, status } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
         <h2>Añadir tarea</h2>
@@ -38,6 +40,16 @@ export class Form extends Component {
               name="title"
               onChange={this.onChange}
               value={title}
+            />
+          </div>
+          <div className="form-group">
+            <label>Estado</label>
+            <input
+              className="form-control"
+              type="text"
+              name="status"
+              onChange={this.onChange}
+              value={status}
             />
           </div>
           <div className="form-group">
