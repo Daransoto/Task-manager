@@ -1,32 +1,40 @@
 import axios from 'axios';
+import { createMessage, returnErrors } from './messages';
+import { tokenConfig } from './auth';
 import { GET_TASKS, DELETE_TASK, ADD_TASK } from './types'
 
-export const getTasks = () => dispatch => {
-  axios.get('/api/tasks/')
+export const getTasks = () => (dispatch, getState) => {
+  axios.get('/api/tasks/', tokenConfig(getState))
     .then(res => {
       dispatch({
         type: GET_TASKS,
         payload: res.data
       })
-    }).catch(err => console.log(err));
+    }).catch(err => dispatch(returnErrors(
+      err.response.data, err.response.status
+    )));
 }
 
-export const deleteTask = (id) => dispatch => {
-  axios.delete(`/api/tasks/${id}/`)
+export const deleteTask = (id) => (dispatch, getState) => {
+  axios.delete(`/api/tasks/${id}/`, tokenConfig(getState))
     .then(res => {
+      dispatch(createMessage({deleteTask: 'Tarea Eliminada'}));
       dispatch({
         type: DELETE_TASK,
         payload: id
       })
-    }).catch(err => console.log(err));
+    }).catch(err => console.log(err.response.data));
 }
 
-export const addTask = task => dispatch => {
-  axios.post('/api/tasks/', task)
+export const addTask = task => (dispatch, getState) => {
+  axios.post('/api/tasks/', task, tokenConfig(getState))
     .then(res => {
+      dispatch(createMessage({addTask: 'Tarea Agregada'}));
       dispatch({
         type: ADD_TASK,
         payload: res.data
       })
-    }).catch(err => console.log(err));
+    }).catch(err => dispatch(returnErrors(
+      err.response.data, err.response.status
+    )));
 }

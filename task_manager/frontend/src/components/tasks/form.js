@@ -20,6 +20,9 @@ export class Form extends Component {
     const { title } = this.state;
     const task = { title };
     this.props.addTask(task);
+    this.setState({
+      title: ""
+    })
   };
   render() {
     const { title } = this.state;
