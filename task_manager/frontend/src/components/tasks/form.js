@@ -43,8 +43,8 @@ export class Form extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Estado</label>
-            <input
+            <label>Descripción</label>
+            <textarea
               className="form-control"
               type="text"
               name="status"

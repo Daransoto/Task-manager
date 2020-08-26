@@ -21,7 +21,7 @@ export class Tasks extends Component {
             <tr>
               <th>ID</th>
               <th>Título</th>
-              <th>Estado</th>
+              <th>Descripción</th>
               <th>Fecha creación</th>
             </tr>
           </thead>
